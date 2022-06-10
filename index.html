@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>文字和图片连续轮播</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            text-align: center;
+            padding-top: 100px;
+        }
+        /*文字轮播*/
+        .c{
+            overflow: hidden;
+            border: 1px solid orange;
+            display: inline-block;
+            line-height: 40px;
+        }
+        .c.horizontal{
+            width: 500px;
+        }
+        .c.vertical{
+            height: 203px;
+            padding: 0 40px;
+        }
+        .sc{
+            animation: marquee 10s linear infinite;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .vertical .sc{
+            animation: marqueev 6s linear infinite;
+        }
+        .sc:hover{
+            animation-play-state: paused;
+        }
+        .c.horizontal .ss{
+            display: inline-block;
+        }
+        .ss{
+            color: #333;
+        }
+        @keyframes marquee {
+            0%{
+                transform: translate3d(0,0,0);
+            }
+            100%{
+                transform: translate3d(-50%,0,0);
+            }
+        }
+        @keyframes marqueev {
+            0%{
+                transform: translate3d(0,0,0);
+            }
+            100%{
+                transform: translate3d(0,-50%,0);
+            }
+        }
+        /*图片轮播*/
+        .tech-slideshow {
+            height: 200px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+        .tech-slideshow > div {
+            height: 200px;
+            width: 2526px;
+            background: url('./imgs/collage.jpg');
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            transform: translate3d(0, 0, 0);
+        }
+        .tech-slideshow .mover-1 {
+            animation: moveSlideshow 60s linear infinite;
+        }
+        .tech-slideshow .mover-2 {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+            background-position: 0 -200px;
+            animation: moveSlideshow 20s linear infinite;
+        }
+        .tech-slideshow:hover .mover-2 {
+            opacity: 1;
+        }
+        @keyframes moveSlideshow {
+            100% { 
+                transform: translateX(-66.6666%);  
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="c horizontal"></div>
+    <br /><br/>
+    <br /><br/>
+    <div class="c vertical"></div>
+    <br /><br/>
+    <br /><br/>
+    <div class="tech-slideshow">
+        <div class="mover-1"></div>
+        <div class="mover-2"></div>
+    </div>
+    <script>
+        buildMarquee();
+        buildMarquee('vertical');
+
+        //horizontal vertical
+        function buildMarquee(direction='horizontal'){
+            var wrap = document.querySelector('.c.'+direction);
+            let text = `1111 本店所有商品全部白送; 2222 本店所有商品全部白送; 3333 本店所有商品全部白送;
+            4444 本店所有商品全部白送; 5555 本店所有商品全部白送;`;
+            if(direction == 'vertical'){
+                text = text.split(';').map(it => `<p class="ss-item">${it}</p>`).join('');
+            }
+            let ss = `<div class="ss">${text}</div>`;
+            wrap.innerHTML = `<div class="sc">${ss}${ss}</div>`;
+        }
+    </script>
+</body>
+
+</html>
